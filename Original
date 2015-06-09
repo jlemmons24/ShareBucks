@@ -1,0 +1,2118 @@
+import java.util.Formatter;
+import java.util.Scanner;
+
+
+public class ShareBucks {
+   public static void main (String [] args){
+      
+      //Declaration of variables
+     
+      Scanner scnr;
+      
+      String period = "";
+      String driverState = "";
+      String rideshareApp = "";
+      String maintenanceDone = "";
+      String filingStatus = "";
+      String timeUnit = "";
+      String newTimeUnit = " ";
+      
+      double grossEarnings = 0.0;
+      double realEarnings = 0.0;
+      double carMpg = 0;
+      double milesDriven = 0;
+      double fillUps = 0;
+      double gasPrice = 0;
+      double taxRate = 0;
+      double maintenanceAmount = 0;
+      double mileageReductionRate = .575;
+      double taxableIncome = 0;
+      double selfEmploymentRate = .153;
+      double miscellaneousExpenses = 0;
+      double insurance = 0.0;
+      double expenses = 0.0;
+      double hoursWorked = 0.0;
+      double earningsPerHr = 0.0;
+      double earningsPerMile = 0.0; 
+      double fedTaxRate = 0.0;
+      
+      int numericUnit = 0;
+     
+     
+   //Initialize Scanner object
+     
+     scnr = new Scanner(System.in); 
+      
+   //Collect User Data and Set to Appropriate varibles
+     
+     System.out.println("Welcome to ShareBucks!");
+     System.out.println("\nThis program will help you calculate your real earnings, \ntaking all your hidden expenses into account.");
+     
+     System.out.println("\nWhich Rideshare app do you drive with(Uber/Lyft/Sidecar)");
+     rideshareApp = scnr.nextLine();
+     
+     System.out.println("Which state do you drive in? If you live in Washington,DC enter 'DC'");
+     driverState = scnr.nextLine();
+     
+     System.out.println("Expected taxable income: ");
+     taxableIncome = scnr.nextDouble();
+     
+     System.out.println("What were your gross earnings?(Earnings before taxes, expenses, etc)");
+     grossEarnings = scnr.nextDouble();
+     
+     System.out.println("Earning period (Include a '-' between numeric and unit values i.e. '3-days'):");
+     period = scnr.next();
+            
+     System.out.println("How many hours did you work?");
+     hoursWorked = scnr.nextDouble();    
+     
+     System.out.println("Did your car require any maintenance over this period? Y/N");
+     maintenanceDone = scnr.next();
+     maintenanceDone.toLowerCase();
+          if(maintenanceDone.equals("y")){
+            System.out.println("How much was spent on maintenance?");
+            maintenanceAmount = scnr.nextDouble();
+          }
+    
+    System.out.println("Enter your vehicle's MPG: ");
+    carMpg = scnr.nextDouble();
+    
+    System.out.println("Enter the number of miles driven over this period: ");
+    milesDriven = scnr.nextInt();
+    
+    fillUps = (milesDriven / carMpg);
+   
+    System.out.println("Please enter any amount spent on other miscellaneous expenses: ");
+    miscellaneousExpenses = scnr.nextDouble();
+    scnr.nextLine();
+    
+    
+    //Implement switch statements for state tax & gas price data 
+    
+    switch(driverState.toLowerCase()){
+    
+      case "al":
+      
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+           
+
+      if(filingStatus.equals("n")){
+           
+           
+           if(taxableIncome < 500){
+                
+               taxRate = .02; 
+                
+            }else if(taxableIncome > 500  && taxableIncome < 3000){
+               
+               taxRate = .04;
+               
+            }else if(taxableIncome > 3000){
+                    
+                 taxRate = .05;
+                   
+       }
+            
+             }
+            
+            
+           
+       if(filingStatus.equals("y")){
+            
+            if(taxableIncome > 0 && taxableIncome < 1000){
+                  
+                  taxRate = .02;
+      
+            }else if(taxableIncome > 1000  && taxableIncome < 6000){
+               
+                  taxRate = .04; 
+               
+            }else if(taxableIncome > 6000){
+            
+                  taxRate = .05;
+   
+        }
+        
+             }
+
+        
+         gasPrice = 2.538;
+              
+      
+      break;
+      
+      
+      
+      case "ak":
+     
+      gasPrice = 3.366;
+      taxRate = 0; 
+      
+      break;
+      
+      case "az":
+
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+           
+
+      if(filingStatus.equals("n")){
+           
+           
+           if(taxableIncome < 10000){
+               
+               taxRate = .0259; 
+           
+            }else if(taxableIncome > 10000 && taxableIncome < 25000){
+            
+                  taxRate = .0288;
+                 
+            }else if(taxableIncome > 25000 && taxableIncome < 50000){
+         
+                  taxRate = .0336;
+            
+            }else if(taxableIncome > 50000 && taxableIncome < 150000){
+               
+                  taxRate = .0454;
+         
+        
+      } 
+      
+            }
+      
+        
+          
+     if(filingStatus.equals("y")){
+       
+            if(taxableIncome < 20000){
+            
+                  taxRate = .0259;
+        
+            }else if(taxableIncome > 20000 && taxableIncome < 50000){
+            
+                  taxRate = .0288;
+        
+            }else if(taxableIncome > 50000 && taxableIncome < 100000){
+            
+                  taxRate = .0336;
+        
+            }else if(taxableIncome > 100000 && taxableIncome < 300000){
+         
+                  taxRate = .0424; 
+         
+            }else if(taxableIncome > 300000){
+        
+                  taxRate = .0454;
+        
+     }
+        
+             }
+
+      gasPrice = 2.752;
+  
+      
+      break;
+      
+      case "ar":
+        
+              
+         if(taxableIncome < 4199){
+           
+               taxRate = .01;
+           
+            }else if(taxableIncome > 4199 && taxableIncome < 8299){
+      
+               taxRate = .025;
+      
+            }else if(taxableIncome > 8299 && taxableIncome < 12399){
+   
+               taxRate = .035;
+   
+            }else if(taxableIncome > 12399 && taxableIncome < 20699){
+            
+               taxRate = .045;
+      
+            }else if(taxableIncome > 20699 && taxableIncome < 34599){
+            
+               taxRate = .06;
+      
+            }else if(taxableIncome > 34599){
+               
+               taxRate = .07;
+           }
+   
+   
+
+            gasPrice = 2.498;
+      
+      break;
+      
+      case "ca":
+        
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+            filingStatus.toLowerCase();
+
+         if(filingStatus.equals("n")){
+            
+            
+             if(taxableIncome < 7582){
+              
+                  taxRate = .01;
+              
+               }else if(taxableIncome > 7582 && taxableIncome < 17976){
+               
+                  taxRate = .02;
+         
+               }else if(taxableIncome > 17976 && taxableIncome < 28371){
+                  
+                  taxRate = .04;
+                     
+               }else if(taxableIncome > 28371 && taxableIncome < 39384){
+               
+                  taxRate = .06;
+         
+               }else if(taxableIncome > 39384 && taxableIncome < 49774){
+               
+                  taxRate = .08;
+         
+               }else if(taxableIncome > 49774 && taxableIncome < 254250){
+              
+                  taxRate = .093; 
+               
+               }else if(taxableIncome > 254250 && taxableIncome < 305100){
+                     
+                  taxRate = .103; 
+               
+               }else if(taxableIncome > 305100 && taxableIncome < 508500){
+                  
+                  taxRate = .113;
+               
+               }else if(taxableIncome > 508500 && taxableIncome < 1000000){
+               
+                  taxRate = .123;
+    
+               }else if(taxableIncome > 100000 ){
+                  
+                  taxRate = .133;
+               }
+   
+          
+         } 
+               
+          if(filingStatus.equals("y")){ 
+               
+               if(taxableIncome < 15174){
+                     
+                     taxRate = .01;
+               
+               } else if(taxableIncome > 15174 && taxableIncome < 35952){
+               
+                     taxRate = .02;
+               
+               }else if(taxableIncome > 35952 && taxableIncome < 46346){
+               
+                     taxRate = .04;
+               
+               }else if(taxableIncome > 46346 && taxableIncome < 57359){
+               
+                     taxRate = .06;
+                  
+               }else if(taxableIncome > 57359 && taxableIncome < 67751){
+                  
+                     taxRate = .08;
+               
+               }else if(taxableIncome > 67751 && taxableIncome < 345780){
+               
+                     taxRate = .093;
+               
+               } else if(taxableIncome > 345780 && taxableIncome < 414936){
+               
+                     taxRate = .103;
+               
+               }else if(taxableIncome > 414936 && taxableIncome < 691560){
+               
+                     taxRate = .113;
+               
+               }else if(taxableIncome > 691560 && taxableIncome < 1000000){
+               
+                     taxRate = .123;
+               
+               }else if(taxableIncome > 1000000){
+                     
+                     taxRate = .133; 
+               }
+         }
+   
+         gasPrice = 3.608;
+      
+      break;
+      
+      case "co":
+      
+      gasPrice = 2.625;
+      taxRate = .463;
+      
+      break;
+      
+      case "ct":
+
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+            filingStatus.toLowerCase();
+
+      if(filingStatus.equals("n")){
+           
+           
+           if(taxableIncome < 10000){
+           
+               taxRate = .03;
+           
+            }else if(taxableIncome >= 10000 && taxableIncome < 50000){
+            
+               taxRate = .05; 
+      
+            }else if(taxableIncome >= 50000 && taxableIncome < 100000){
+            
+               taxRate = .055;
+   
+            }else if(taxableIncome >= 100000 && taxableIncome < 200000){
+            
+               taxRate = .06;
+      
+            }else if(taxableIncome >=200000  && taxableIncome < 250000){
+            
+               taxRate = .065;
+      
+            }else if(taxableIncome > 250000){
+   
+               taxRate = .067;
+            
+            }
+            
+         }
+         
+       if(filingStatus.equals("y")){
+        
+              if(taxableIncome < 20000){
+           
+               taxRate = .03;
+           
+            }else if(taxableIncome > 20000 && taxableIncome < 100000){
+            
+               taxRate = .05; 
+      
+            }else if(taxableIncome > 100000 && taxableIncome < 200000){
+            
+               taxRate = .055;
+   
+            }else if(taxableIncome > 200000 && taxableIncome < 400000){
+            
+               taxRate = .06;
+      
+            }else if(taxableIncome >= 400000  && taxableIncome < 500000){
+            
+               taxRate = .065;
+      
+            }else if(taxableIncome >= 500000){
+   
+               taxRate = .067;
+            
+            }
+
+         }
+           gasPrice = 2.888;
+    
+      
+      break;
+      
+
+      case "de":
+           
+           if(taxableIncome > 2000 && taxableIncome < 5000){
+               
+               taxRate = .02;
+               
+           }else if(taxableIncome > 5000 && taxableIncome < 10000){
+               
+               taxRate = .039;
+               
+            }else if(taxableIncome > 10000 && taxableIncome < 20000){
+               
+               taxRate = .048;
+               
+            }else if(taxableIncome > 20000 && taxableIncome < 25000){
+            
+               taxRate = .052;
+      
+            }else if(taxableIncome > 25000 && taxableIncome < 60000){
+            
+               taxRate = .0555;
+      
+            }else if(taxableIncome > 60000){
+               
+               taxRate = .066;
+            }
+
+         
+             gasPrice = 2.664;
+   
+      
+      break;
+      
+      case "dc": 
+     
+
+           if(taxableIncome < 10000 ){
+            
+               taxRate = .04;
+           
+            }else if(taxableIncome > 10000 && taxableIncome < 40000){
+      
+               taxRate = .06;
+      
+            }else if(taxableIncome > 40000 && taxableIncome < 350000){
+               
+               taxRate = .085;
+   
+            }else if(taxableIncome > 350000){
+               
+               taxRate = .0895;
+      
+            }
+  
+    
+              gasPrice = 2.860;
+    
+      
+      break;
+      
+      case "fl":
+      
+      gasPrice = 2.703;
+      taxRate = 0.0;
+      
+      break;
+      
+      case "ga":
+      
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+      
+            if(filingStatus.equals("n")){
+           
+           
+           if(taxableIncome < 750){
+           
+               taxRate = .01;
+           
+            }else if(taxableIncome > 750 && taxableIncome < 2250){
+            
+               taxRate = .02;
+      
+            }else if(taxableIncome > 2250 && taxableIncome < 3750){
+            
+               taxRate = .03;
+   
+            }else if(taxableIncome > 3750 && taxableIncome < 5250){
+            
+               taxRate = .04;
+      
+            }else if(taxableIncome > 5250 && taxableIncome < 7000){
+            
+               taxRate =.05;
+      
+            }else if(taxableIncome > 7000){
+               
+               taxRate = .06;            
+            }
+         }
+         
+         
+         
+       if(filingStatus.equals("y")){
+          
+            if(taxableIncome < 1000){
+           
+               taxRate = .01;
+           
+            }else if(taxableIncome > 1000 && taxableIncome < 3000){
+            
+               taxRate = .02; 
+      
+            }else if(taxableIncome > 3000 && taxableIncome < 5000){
+            
+               taxRate = .03;
+   
+            }else if(taxableIncome > 5000 && taxableIncome < 7000){
+            
+               taxRate = .04;
+      
+            }else if(taxableIncome > 7000  && taxableIncome < 10000){
+            
+               taxRate = .05;
+      
+            }else if(taxableIncome > 10000){
+   
+               taxRate = .06;
+            
+            }
+       }
+      
+            gasPrice = 2.675;
+      
+      
+      break;
+      
+      case "hi":
+      
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+            
+
+      if(filingStatus.equals("n")){
+           
+           
+           
+           if(taxableIncome < 2400){
+           
+               taxRate = .014;
+           
+            }else if(taxableIncome > 2400 && taxableIncome < 4800){
+            
+               taxRate = .032;
+      
+            }else if(taxableIncome > 4800 && taxableIncome < 9600){
+            
+               taxRate = .055;
+   
+            }else if(taxableIncome > 9600 && taxableIncome < 14000){
+               
+               taxRate = .064;
+      
+            }else if(taxableIncome > 14000 && taxableIncome < 19200){
+            
+               taxRate = .068;
+      
+            }else if(taxableIncome > 19200 && taxableIncome < 24000){
+            
+               taxRate = .072;
+   
+            }
+            
+         }   
+            
+      if(filingStatus.equals("y")){   
+         
+             if(taxableIncome < 4800){
+         
+                   taxRate = .014;
+      
+              }else if(taxableIncome > 4800 && taxableIncome < 9600){
+      
+                     taxRate = .032;
+         
+              }else if(taxableIncome > 9600 && taxableIncome < 19200){
+         
+                     taxRate = .055;
+      
+              }else if(taxableIncome > 19200 && taxableIncome < 28800){
+      
+                     taxRate = .064;
+         
+              }else if(taxableIncome > 28800 && taxableIncome < 38400){
+      
+                      taxRate = .068;
+         
+              }else if(taxableIncome > 38400 && taxableIncome < 48000){
+      
+                      taxRate = .072;
+          
+              }else if(taxableIncome > 48000 && taxableIncome < 72000){
+      
+                      taxRate = .076;
+      
+              }else if(taxableIncome > 72000 && taxableIncome < 96000){
+      
+                      taxRate = .079;
+      
+               }else if(taxableIncome > 96000 && taxableIncome < 300000){
+            
+                      taxRate = .0825;      
+          
+               }else if(taxableIncome > 300000 && taxableIncome < 350000){
+      
+                      taxRate = .09;
+      
+               }else if(taxableIncome > 350000 && taxableIncome < 400000){
+      
+                      taxRate = .1;
+      
+                }else if(taxableIncome > 400000){
+         
+                      taxRate = .11;
+            
+               }
+               
+         }
+      
+            gasPrice = 3.309;
+      
+      
+      break;
+      
+    
+      
+      case "id":
+      
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+            
+
+          if(filingStatus.equals("n")){
+         
+           
+                if(taxableIncome < 1408){
+            
+                     taxRate = .016;            
+                              
+                }else if(taxableIncome > 1408 && taxableIncome < 2817){
+      
+                     taxRate = .036;
+      
+                }else if(taxableIncome > 2817 && taxableIncome < 4226){
+               
+                     taxRate = .041;
+               
+                }else if(taxableIncome > 4226 && taxableIncome < 5635){
+                 
+                      taxRate = .051;
+                 
+                }else if(taxableIncome > 5635 && taxableIncome < 7044){
+                  
+                     taxRate = .071;
+                  
+                }else if(taxableIncome > 7044 && taxableIncome < 10567){
+            
+                      taxRate = .074;
+            
+             }  
+             
+           }
+             
+             
+             
+       if (filingStatus.equals("y")){
+                  
+                  if(taxableIncome < 2817){
+                     
+                     taxRate = .016;
+                     
+                  } else if(taxableIncome > 2817 && taxableIncome < 5635){
+                  
+                     taxRate = .036;
+                     
+                  }else if(taxableIncome > 5635 && taxableIncome < 8453){
+                  
+                     taxRate = .041;
+                     
+                  } else if(taxableIncome > 8435 && taxableIncome < 11271){
+                  
+                        
+                        taxRate = .051; 
+                  
+                  
+                  }else if(taxableIncome > 11271 && taxableIncome < 14089){
+                  
+                       taxRate = .061;
+                  
+                  }else if(taxableIncome > 14089 && taxableIncome < 21136){
+                  
+                       taxRate = .071;
+                  
+                  }else if(taxableIncome > 21136){
+                  
+                     taxRate = .074;
+                     
+                  } 
+                  
+         }
+             
+          
+
+      
+            gasPrice = 2.912;
+      
+      
+      break;
+      
+      case "il":
+   
+      gasPrice = 9.921;
+      taxRate = .05; 
+      
+      break;
+      
+      case "in":
+            
+      gasPrice = 2.645;
+      taxRate = .034;
+      
+      break;
+      
+      case "ia":
+      
+      System.out.println("Do you file jointly? (y/n)");
+         filingStatus = scnr.nextLine();
+         
+
+      if(filingStatus.equals("n")){
+         
+           if(taxableIncome < 1515){
+               
+               taxRate = .0036;
+               
+            }else if(taxableIncome > 1515 && taxableIncome < 3030){
+               
+               taxRate = .0072;
+               
+            }else if(taxableIncome > 3030 && taxableIncome < 6060){
+               
+               taxRate = .0243;
+               
+            }else if(taxableIncome > 6060 && taxableIncome < 13635){
+               
+               taxRate = .045; 
+               
+            }else if(taxableIncome > 13635 && taxableIncome < 22725){
+               
+               taxRate = .0612;
+               
+            }else if(taxableIncome > 22725 && taxableIncome < 30300){
+               
+               taxRate = .0648;
+               
+            }else if(taxableIncome > 30300 && taxableIncome < 45450){
+               
+               taxRate = .068;
+            
+            }else if(taxableIncome > 45450 && taxableIncome < 68175){
+            
+               taxRate = .0792;
+            
+            }else if(taxableIncome > 68175){
+            
+               taxRate = .0898;
+            
+                }
+            
+        
+            } 
+      
+               gasPrice = 2.664; 
+    
+      
+      break;
+      
+      case "ks":
+      
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+            
+
+      if(filingStatus.equals("n")){
+           if(taxableIncome < 15000){
+               
+               taxRate = .027;
+               
+            }else if(taxableIncome > 15000){
+                 
+                 taxRate = .048;
+                 
+            }   
+         }
+       
+       
+         if(filingStatus.equals("y")){
+            
+            if(taxableIncome < 30000){
+            
+               taxRate = .027;
+              
+            }else if(taxableIncome > 30000){
+               
+               taxRate = .048;
+            
+            }
+         
+         } 
+
+
+      
+      gasPrice = 2.565;
+      
+      
+      break;
+      
+      case "ky":
+      
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+            
+
+      if(filingStatus.equals("n")){
+          
+           if(taxableIncome < 3000){
+               
+               taxRate = .02;
+               
+            }else if(taxableIncome > 3000 && taxableIncome < 4000){
+      
+               taxRate = .03;
+      
+            }else if(taxableIncome > 4000 && taxableIncome < 5000){
+               
+               taxableIncome = .04;
+               
+            }else if(taxableIncome > 5000 && taxableIncome < 8000){
+                
+                taxableIncome = .05;
+                
+            }else if(taxableIncome > 8000 && taxableIncome < 75000){
+      
+               taxRate = .058;
+      
+            }else if(taxableIncome > 75000){
+               
+               taxRate = .06;
+               
+            }
+     }  
+         
+      
+      gasPrice = 2.663;
+      
+      
+      break;
+      
+      case "la":
+      
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+            
+
+      if(filingStatus.equals("n")){
+           
+           
+           if(taxableIncome < 12500){
+               
+               taxRate = .02;
+               
+            }else if(taxableIncome > 12500 && taxableIncome < 50000){
+               
+               taxRate = .04;
+                     
+            }else if(taxableIncome > 50000){
+                 
+                 taxRate = .06;
+                 
+            }
+        } 
+        
+
+     
+         if(filingStatus.equals("y")){
+            
+            if(taxableIncome < 25000){
+            
+                taxRate = .02;  
+                  
+            }else if(taxableIncome > 25000 && taxableIncome < 10000){
+               
+                taxRate = .04;            
+            
+            }else if(taxableIncome > 100000){
+               
+               taxRate = .06;
+            
+            }
+         
+         }
+      
+      gasPrice = 2.563;
+      
+      break;
+      
+      case "me":
+      
+                   
+           if(taxableIncome < 5200){
+            
+               taxRate = .065;
+            
+            }else if(taxableIncome > 20900){
+               
+               taxRate = .0795;
+               
+            }     
+
+      
+       gasPrice = 2.747;
+     
+      
+      break;
+      
+      case "md":
+      
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+            
+
+       if(filingStatus.equals("n")){
+          
+          
+           if(taxableIncome < 1000){
+               
+               taxRate = .02;               
+               
+            }else if(taxableIncome > 1000 && taxableIncome < 2000){
+               
+               taxRate = .03;
+               
+            }else if(taxableIncome > 2000 && taxableIncome < 3000){
+               
+               taxRate = .04;
+               
+            }else if(taxableIncome > 3000 && taxableIncome < 100000){
+                 
+               taxRate = .0475;
+                 
+            }else if(taxableIncome > 100000 && taxableIncome < 125000){
+               
+               taxRate = .05;
+               
+            }else if(taxableIncome > 125000 && taxableIncome < 150000){
+               
+               taxRate = .0525;
+            
+             }else if(taxableIncome > 150000 && taxableIncome < 250000){
+             
+               taxRate = .055;
+               
+             }else if(taxableIncome > 250000){
+             
+               taxRate = .0575;
+               
+             }
+         } 
+      
+       if(filingStatus.equals("y")){
+       
+         if(taxableIncome < 1000){
+         
+            taxRate = .02;
+         
+         }else if(taxableIncome > 1000 && taxableIncome < 2000){
+         
+            taxRate = .03;
+         
+         }else if(taxableIncome > 2000 && taxableIncome < 3000){
+         
+            taxRate = .04;
+         
+         }else if(taxableIncome > 3000 && taxableIncome < 100000){
+         
+            taxRate = .0475;
+         
+         }else if(taxableIncome > 100000 && taxableIncome < 125000){
+   
+            taxRate = .05;
+         
+         }else if(taxableIncome > 125000 && taxableIncome < 150000){
+         
+            taxRate = .0525;
+            
+         }else if(taxableIncome > 150000 && taxableIncome < 250000){
+         
+            taxRate = .055;
+               
+         }else if(taxableIncome > 250000){
+         
+            taxRate = .0575;
+            
+         }
+         
+       }
+      
+      gasPrice = 2.720;
+      
+      
+      break;
+      
+      case "ma":
+                      
+            gasPrice = 2.716; 
+            taxRate = .052;
+      
+      break;
+      
+      case "mi":
+         
+         gasPrice = 2.705;
+         taxRate = .0425;
+      
+      break;
+      
+      case "mn":
+                
+           if(taxableIncome < 24680){
+               
+               taxRate = .0535;
+               
+            }else if(taxableIncome > 24680 && taxableIncome < 81080){
+               
+               taxRate = .0705;
+               
+            }else if(taxableIncome > 81080 && taxableIncome < 152540){
+               
+               taxRate = .0785;
+               
+            }else if(taxableIncome > 152540){
+      
+               taxRate = .0985;
+      
+            }
+
+      
+            gasPrice = 2.650;
+      
+      
+      break;
+      
+      case "ms":
+      
+           if(taxableIncome < 5000){
+            
+               taxRate = .03;
+           
+            }else if(taxableIncome > 5000 && taxableIncome < 10000){
+               
+               taxRate = .04;
+               
+            }else if(taxableIncome > 10000){
+               
+               taxRate =  .05;
+               
+            }
+         
+      
+      gasPrice = 2.473;
+      
+      
+      break;
+      
+      case "mo":
+      
+            if(taxableIncome < 1000){
+           
+               taxRate = .015;
+           
+            }else if(taxableIncome > 1000 && taxableIncome < 2000){
+               
+               taxRate = .02;
+               
+            }else if(taxableIncome > 2000 && taxableIncome < 3000){
+               
+               taxRate = .025;
+               
+            }else if(taxableIncome > 3000 && taxableIncome < 4000){
+               
+               taxRate = .03;
+               
+            }else if(taxableIncome > 4000 && taxableIncome < 5000){
+               
+               taxRate = .035;
+            
+            }else if(taxableIncome > 5000 && taxableIncome < 6000){
+               
+               taxRate = .04;
+               
+            }else if(taxableIncome > 6000 && taxableIncome < 7000){
+            
+               taxRate = .05;
+               
+            }else if(taxableIncome > 7000 && taxableIncome < 8000){
+            
+               taxRate = .055;
+            
+            }else if(taxableIncome > 8000 && taxableIncome < 9000){
+            
+               taxRate = .06;
+               
+            }
+
+      
+      gasPrice = 2.537;;
+      
+      
+      break;
+   
+      
+      case "mt":
+     
+           if(taxableIncome < 2800){
+           
+               taxRate = .01;
+           
+            }else if(taxableIncome > 2800 && taxableIncome < 4900){
+                  
+               taxRate = .02;  
+                  
+            }else if(taxableIncome > 4900 && taxableIncome < 7400){
+               
+               taxRate = .03;
+               
+            }else if(taxableIncome > 7400 && taxableIncome < 10100){
+               
+               taxRate = .04;
+               
+            }else if(taxableIncome > 10100 && taxableIncome < 13000){
+               
+               taxRate = .05;
+               
+            }else if(taxableIncome > 13000 && taxableIncome < 16700){
+               
+               taxRate = .06;
+               
+            }else if(taxableIncome > 16700){
+            
+               taxRate = .069;
+               
+            }
+ 
+      
+      gasPrice = 2.692;
+     
+      
+      break; 
+      
+      case "ne":
+      
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+            
+
+      if(filingStatus.equals("n")){
+           
+           if(taxableIncome < 3000){
+               
+               taxRate = .0246;    
+               
+            }else if(taxableIncome > 3000 && taxableIncome < 18000){
+               
+               taxRate = .0351;
+               
+            }else if(taxableIncome > 18000 && taxableIncome < 29000){
+               
+               taxRate = .0501;
+               
+            }else if(taxableIncome < 29000){
+               
+               taxRate = .0684;
+               
+            }
+         } 
+         
+      if(filingStatus.equals("y")){
+      
+         if(taxableIncome < 6000){
+            
+            taxRate = .0246;
+         
+         }else if(taxableIncome > 6000 && taxableIncome < 36000){
+         
+            taxRate = .0351;
+         
+         }else if(taxableIncome > 36000 && taxableIncome < 58000){
+         
+            taxRate = .0501;
+         
+         }else if(taxableIncome > 58000){
+         
+            taxRate = .0684;
+            
+         }
+      }
+      
+      gasPrice = 2.648; 
+      
+      break;
+      
+      case "nv":
+            
+      gasPrice = 3.263;
+      taxRate = 0.0;
+      
+      break;
+      
+      case "nh":
+            
+      gasPrice = 2.668;
+      taxRate = .05;
+      
+      break;
+      
+      case "nj":
+      
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+           
+
+      if(filingStatus.equals("n")){
+           
+           if(taxableIncome < 20000){
+               
+               taxRate = .014;
+                
+            }else if(taxableIncome > 20000 && taxableIncome < 35000){
+               
+               taxRate = .0175;
+               
+            }else if(taxableIncome > 35000 && taxableIncome < 40000){
+               
+               taxRate = .035;
+               
+            }else if(taxableIncome > 40000 && taxableIncome < 75000){
+               
+               taxRate = .05525;
+                  
+            }else if(taxableIncome > 75000 && taxableIncome < 500000){
+               
+               taxRate = .0637;
+               
+            }else if(taxableIncome > 500000){
+               
+               taxRate = .0897;
+               
+            }
+      }      
+      
+      if(filingStatus.equals("y")){
+         
+         if(taxableIncome < 20000){
+         
+            taxRate = .014;
+            
+         }else if(taxableIncome > 20000 && taxableIncome < 50000){
+         
+            taxRate = .0175;
+         
+         }else if(taxableIncome > 50000 && taxableIncome < 70000){
+         
+            taxRate = .0245;
+            
+         }else if(taxableIncome > 70000 && taxableIncome < 80000){
+         
+            taxRate = .035;
+         
+         }else if(taxableIncome > 80000 && taxableIncome < 150000){
+         
+            taxRate = .05525;
+         
+         }else if(taxableIncome > 150000 && taxableIncome < 500000){
+         
+            taxRate = .0637;
+            
+         }else if(taxableIncome > 500000){
+         
+            taxRate = .0897;
+            
+         }
+      
+      }
+      
+      
+      gasPrice = 2.560;
+       
+      
+      break;
+      
+      case "nm":
+      
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+           
+
+      if(filingStatus.equals("n")){
+           if(taxableIncome < 5500){
+               
+               taxRate = .017;
+               
+            }else if(taxableIncome > 5500 && taxableIncome < 11000){
+               
+               taxRate = .032;
+               
+            }else if(taxableIncome > 11000 && taxableIncome < 16000){
+               
+               taxRate = .047;
+               
+            }else if(taxableIncome > 16000){
+               
+               taxRate = .049;
+               
+            }
+      } 
+      
+      if(filingStatus.equals("y")){
+         
+         if(taxableIncome < 8000){
+         
+            taxRate = .017;
+            
+         }else if(taxableIncome > 8000 && taxableIncome < 16000){
+         
+            taxRate = .032;
+            
+         }else if(taxableIncome > 16000 && taxableIncome < 24000){
+         
+            taxRate = .047;
+            
+         }else if(taxableIncome > 24000){
+         
+            taxRate = .049;
+         
+         }
+      
+      }
+      
+      gasPrice = 2.663;
+      
+      break;
+      
+      case "ny":
+      
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+            
+
+      if(filingStatus.equals("n")){
+           
+           if(taxableIncome < 8200){
+               
+               taxRate = .04;
+               
+            }else if(taxableIncome > 8200 && taxableIncome < 11300){
+               
+               taxRate = .045;
+               
+            }else if(taxableIncome > 113000 && taxableIncome < 13350){
+               
+               taxRate = .0525;
+               
+            }else if(taxableIncome > 13350 && taxableIncome < 20550){
+               
+               taxRate = .059;
+               
+            }else if(taxableIncome > 20550 && taxableIncome < 77150){
+                  
+               taxRate = .0645;   
+                  
+            }else if(taxableIncome > 77150 && taxableIncome < 205850){
+               
+               taxRate = .0665;
+            
+            }else if(taxableIncome > 205850 && taxableIncome < 1029250){
+            
+               taxRate = .0882;
+            
+            }
+      } 
+     
+      if(filingStatus.equals("y")){
+      
+         if(taxableIncome < 16450){
+            
+            taxRate = .04;
+            
+         }else if(taxableIncome > 16450 && taxableIncome < 22600){
+         
+            taxRate = .045;
+         
+         }else if(taxableIncome > 22600 && taxableIncome < 26750){
+         
+            taxRate = .0525;
+            
+         }else if(taxableIncome > 26750 && taxableIncome < 41150){
+         
+            taxRate = .059;
+         
+         }else if(taxableIncome > 41150 && taxableIncome < 154350){
+         
+            taxRate = .0645;
+         
+         }else if(taxableIncome > 154350 && taxableIncome < 308750){
+         
+            taxRate = .0665;
+            
+         }else if(taxableIncome > 308750 && taxableIncome < 2058550){
+            
+            taxRate = .0685;
+         
+         }else if(taxableIncome > 2058550){
+         
+            taxRate = .0882;
+            
+         }
+      
+      }
+     
+      
+      gasPrice = 2.888;
+      
+      break;
+      
+      case "nc":
+      
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+           
+      
+      gasPrice = 2.635;
+      taxRate = .058;
+      
+      break;
+      
+      case "nd":
+      
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+            
+
+      if(filingStatus.equals("n")){
+           
+           if(taxableIncome < 36900){
+            
+               taxRate = .0122;
+           
+            }else if(taxableIncome > 36900 && taxableIncome < 89350){
+            
+               taxRate = .0227;
+      
+            }else if(taxableIncome > 89350 && taxableIncome < 186350){
+               
+               taxRate = .0252;
+               
+            }else if(taxableIncome > 186350 && taxableIncome < 405100){
+         
+               taxRate = .0293;
+         
+            }else if(taxableIncome > 405100){
+               
+               taxRate = .0322;
+               
+            }
+      }  
+      
+      if(filingStatus.equals("y")){
+         
+         if(taxableIncome < 73800){
+            
+            taxRate = .0122;
+            
+         }else if(taxableIncome > 73800 && taxableIncome < 148850){
+            
+            taxRate = .0227;
+         
+         }else if(taxableIncome > 148850 && taxableIncome < 226850){
+         
+            taxRate = .0252;
+         
+         }else if(taxableIncome > 226850 && taxableIncome < 405100){
+         
+            taxRate = .0293;
+            
+         }else if(taxableIncome > 405100){
+         
+            taxRate = .0322;
+         
+         }
+      }    
+     
+     
+      gasPrice = 2.641;
+      
+      
+      break;
+      
+      case "oh":
+      
+         if(taxableIncome < 5200){
+               
+               taxRate = .054;
+            
+            }else if(taxableIncome > 5200 && taxableIncome < 10400){
+               
+               taxRate = .0107;
+               
+            }else if(taxableIncome > 10400 && taxableIncome < 15650){
+               
+               taxRate = .02150;
+               
+            }else if(taxableIncome >15650 && taxableIncome < 20900){
+               
+               taxRate = .0269;
+               
+            }else if(taxableIncome > 20900 && taxableIncome < 41700){
+                
+                taxRate = .0322;
+                
+            }else if(taxableIncome > 41700 && taxableIncome < 82350){
+               
+               taxRate = .0376;
+                           
+            }else if(taxableIncome > 82350 && taxableIncome < 104250){
+            
+               taxRate = .043;
+            
+            }else if(taxableIncome > 104250 && taxableIncome < 208500){
+            
+               taxRate = .0499;
+            
+            }else if(taxableIncome > 208500){
+            
+               taxRate = .0592;
+            
+            }
+      
+      
+      gasPrice = 2.701;
+      
+      
+      break;
+      
+      case "ok":
+      
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+            
+      if(filingStatus.equals("n")){
+           
+           if(taxableIncome < 1000){
+               
+               taxRate = .005;
+               
+            }else if(taxableIncome > 1000 && taxableIncome < 2500){
+               
+               taxRate = .01;
+               
+            }else if(taxableIncome > 2500 && taxableIncome < 3750){
+               
+               taxRate = .02;
+               
+            }else if(taxableIncome > 3750 && taxableIncome < 4900){
+               
+               taxRate = .03; 
+               
+            }else if(taxableIncome > 4900 && taxableIncome < 7200){
+               
+               taxRate = .04; 
+               
+            }else if(taxableIncome > 7200 && taxableIncome < 8700){
+               
+               taxRate = .05;
+   
+            }else if(taxableIncome > 8700){
+            
+               taxRate = .0525;
+            
+            }
+      } 
+      
+      if(filingStatus.equals("y")){
+         
+         if(taxableIncome < 2000){
+            
+            taxRate = .005;
+         
+         }else if(taxableIncome > 2000 && taxableIncome < 5000){
+         
+            taxRate = .01;
+         
+         }else if(taxableIncome > 5000 && taxableIncome < 7500){
+         
+            taxRate = .02;
+         
+         }else if(taxableIncome > 7500 && taxableIncome < 9800){
+         
+            taxRate = .03;
+         
+         }else if(taxableIncome > 9800 && taxableIncome < 12200){
+         
+            taxRate = .04;
+            
+         }else if(taxableIncome > 12200 && taxableIncome < 15000){
+         
+            taxRate = .05;
+         
+         }else if(taxableIncome > 15000){
+         
+            taxRate = .0525;
+         
+         }
+      
+      }
+      
+      gasPrice = 2.511;
+      
+      break;
+      
+      case "or":
+      
+            System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+            
+
+         if(filingStatus.equals("n")){
+           
+           if(taxableIncome < 3300){
+            
+               taxRate = .05;
+           
+            }else if(taxableIncome > 3300 && taxableIncome < 8250){
+               
+               taxRate = .07;
+               
+            }else if(taxableIncome > 8250 && taxableIncome < 125000){
+               
+               taxRate = .09;
+               
+            }else if(taxableIncome >125000){
+               
+               taxRate = .099;
+               
+            }
+       } 
+      
+       if(filingStatus.equals("y")){
+      
+          if(taxableIncome < 6500){
+         
+            taxRate = .05;
+         
+         }else if(taxableIncome > 6500 && taxableIncome < 16300){
+         
+            taxRate = .07;
+         
+         }else if(taxableIncome > 16300 && taxableIncome < 250000){
+         
+            taxRate = .09;
+         
+         }else if(taxableIncome > 250000){
+         
+            taxRate = .099;
+         
+         }
+      
+      }
+      
+      gasPrice = 3.022;
+      
+      break;
+      
+     
+      case "pa":   
+               
+      gasPrice = 2.847;
+      taxRate = .0307;
+      
+      break;
+      
+      case "ri": 
+      
+        
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+           
+
+         if(filingStatus.equals("n")){
+           
+            if(taxableIncome < 59600){
+               
+                 taxRate = .0375;
+               
+             }else if(taxableIncome > 59600 && taxableIncome < 135000){
+      
+                  taxRate = .0475;
+      
+            }else if(taxableIncome > 135000){
+   
+               taxRate = .0599;
+   
+            }
+      } 
+      
+      gasPrice = 2.744;
+      
+      
+      break;
+      
+      case "sc":
+      
+            if(taxableIncome < 2880){
+           
+               taxRate = 0.0;
+           
+            }else if(taxableIncome > 2880 && taxableIncome < 5760){
+               
+               taxRate = .03;
+               
+            }else if(taxableIncome > 5760 && taxableIncome < 8640){
+               
+               taxRate = .04;
+               
+            }else if(taxableIncome > 8640 && taxableIncome < 11520){
+               
+               taxRate = .05;
+               
+            }else if(taxableIncome > 11520 && taxableIncome < 14400){
+               
+               taxRate = .06;
+               
+            }else if(taxableIncome > 14400){
+               
+               taxRate = .07;
+               
+            }
+      
+      
+               gasPrice = 2.455;
+       
+      
+      break;
+      
+      case "sd":
+      
+      gasPrice = 2.685;
+      taxRate = 0.0;
+      
+      break;
+      
+      case "tn":
+      
+      gasPrice = 2.511;
+      taxRate = .06;
+      
+      break; 
+      
+      case "tx":
+            
+      gasPrice = 2.552;
+      taxRate = 0.0; 
+      
+      break;
+      
+      case "ut":
+            
+      gasPrice = 3.024;
+      taxRate = .05;
+      
+      break;
+      
+      case "vt":
+      
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+            
+
+         if(filingStatus.equals("n")){
+           
+             if(taxableIncome < 36900){
+           
+               taxRate = .0355;
+           
+             }else if(taxableIncome > 36900 && taxableIncome < 89350){
+               
+               taxRate = .068;
+               
+             }else if(taxableIncome > 89350 && taxableIncome < 186350){
+               
+               taxRate = .078;
+               
+             }else if(taxableIncome > 186350 && taxableIncome < 405100){
+                
+               taxRate = .088;   
+                  
+             }else if(taxableIncome > 405100){
+               
+               taxRate = .0895;
+               
+            }
+          } 
+      
+     if (filingStatus.equals("y")){
+      
+         if(taxableIncome < 73800){
+            
+            taxRate = .0355;
+         
+         }else if (taxableIncome > 73800 && taxableIncome < 148850){
+         
+            taxRate = .068;
+         
+         }else if(taxableIncome > 148850 && taxableIncome < 226850){
+         
+            taxRate = .078;
+         
+         }else if(taxableIncome > 226850 && taxableIncome < 405100){
+         
+            taxRate = .088;
+         
+         }else if(taxableIncome > 405100){
+         
+            taxRate = .0895;
+         
+         }
+      
+      }
+      
+      gasPrice = 2.751;
+      
+      
+      break;
+      
+      case "va":
+          
+           if(taxableIncome < 3000){
+               
+               taxRate = .02;
+               
+            }else if(taxableIncome > 3000 && taxableIncome < 5000){
+               
+               taxRate = .03;
+               
+            }else if(taxableIncome > 5000 && taxableIncome < 17000){
+               
+               taxRate = .05;
+               
+            }else if(taxableIncome > 17000){
+               
+               taxRate = .0575;
+               
+            }
+      
+      gasPrice = 2.535;
+      
+      break; 
+      
+      case "wa":
+      
+      gasPrice = 3.061;
+      taxRate = 0.0;
+      
+      break;
+      
+      case "wv":
+         
+           if(taxableIncome < 10000){
+               
+               taxRate = .03;
+               
+            }else if(taxableIncome > 10000 && taxableIncome < 25000){
+                
+                taxRate = .04;
+                  
+            }else if(taxableIncome > 25000 && taxableIncome < 40000){
+               
+               taxRate = .045;
+               
+            }else if(taxableIncome > 40000 && taxableIncome < 60000){
+                
+                taxRate = .06;  
+          
+            }else if(taxableIncome > 60000){
+               
+               taxRate = .065;
+               
+            }
+
+          
+           gasPrice = 2.760;
+     
+      
+      break;
+      
+      case "wi":
+      
+         System.out.println("Do you file jointly? (y/n)");
+            filingStatus = scnr.nextLine();
+            
+
+      if(filingStatus.equals("n")){
+           
+           if(taxableIncome < 10910){
+               
+               taxRate = .04;
+               
+            }else if(taxableIncome > 10910 && taxableIncome < 21820){
+               
+               taxRate = .0584;
+               
+            }else if(taxableIncome > 21820 && taxableIncome < 240190){
+               
+               taxRate = .0627;
+               
+            }else if(taxableIncome > 240190){
+               
+               taxRate = .0765;
+               
+            }
+      } 
+      
+      gasPrice = 2.713;
+  
+      
+      break;
+      
+      case "wy":
+            
+      gasPrice = 2.722;
+      taxRate = 0.0;
+      
+      break;
+      
+      default:
+         
+         System.out.println("Uh-oh...we couldn't find your state. Please try again.");
+         
+         System.out.println("Which state do you drive in? If you live in Washington,DC enter 'dc'");
+         driverState = scnr.nextLine();
+
+      break;
+    
+    }
+    
+      //  -Exceptions for timeUnit entries
+      //  -For statements for time unit delinieations
+      
+      
+   //Federal tax rate
+ 
+      if(filingStatus.equals("n")){
+         
+         if (taxableIncome < 9225){
+         
+          fedTaxRate = .1;  
+            
+         }else if (taxableIncome > 9225 && taxableIncome < 37450){
+            
+            fedTaxRate = .015;
+            
+         }else if(taxableIncome > 37450 && taxableIncome < 90750){
+            
+            fedTaxRate = .25;
+         
+         }else if(taxableIncome > 90750 && taxableIncome < 189300){
+            
+            fedTaxRate = .28;
+         
+         }else if(taxableIncome > 189300 && taxableIncome < 411500){
+         
+            fedTaxRate = .33;
+         
+         }else if(taxableIncome > 411500 && taxableIncome < 413200){
+         
+            fedTaxRate = .35;
+            
+         }else if(taxableIncome > 413200){
+            
+            fedTaxRate = .396;
+         
+         }
+           
+      
+      }
+      
+         taxRate = taxRate + fedTaxRate + selfEmploymentRate;   
+      
+   //Calculate expenses
+      
+expenses = ((grossEarnings * taxRate) + ((milesDriven / carMpg) * gasPrice * fillUps) + insurance + maintenanceAmount - (milesDriven * mileageReductionRate) + miscellaneousExpenses);
+      
+   //Calculate realEarnings
+      
+         realEarnings = (grossEarnings - expenses); 
+         
+  //Calculate Earning/timeUnit
+  //Initialize String array
+  //Separate period into a numericUnit and Unit of Time
+      
+      String [] strSplit = new String[1];  
+      
+      strSplit = period.split("-");
+      
+  //Convert the numericUnit value to int type
+  //Store numericUnit & timeUnit values in variables 
+     
+     numericUnit = Integer.parseInt(strSplit[0]);
+     
+     timeUnit = strSplit [1]; 
+     
+   //Change timeUnit from plural to singular
+     
+    if (timeUnit.equals("days")){
+      
+        char s = 's';
+        
+         if( timeUnit.charAt(3) == s){
+         
+               
+              timeUnit = newTimeUnit;
+              
+              newTimeUnit = "day";
+      
+      }
+        
+         }else if (timeUnit.equals("weeks")){
+      
+         char s = 's';
+         
+         if(timeUnit.charAt(4) == s){
+         
+               
+              timeUnit = newTimeUnit;
+              
+              newTimeUnit = "week";
+      
+      }
+  
+            }else if (timeUnit.equals("years")){
+      
+            char s = 's';
+
+            if(timeUnit.charAt(4) == s){
+        
+               
+               timeUnit = newTimeUnit;
+
+               newTimeUnit = "year";
+      
+      }
+
+             } 
+      
+   //Print out stats
+      
+      System.out.printf("Real Earnings: %.2f", realEarnings);
+      System.out.printf("\nTotal expenses: %.2f", expenses);
+      System.out.printf("\nTotal taxes owed: %.2f", (grossEarnings * taxRate));
+      System.out.printf("\nTotal spent on gas: %.2f", (fillUps * gasPrice));
+      System.out.printf("\nEarnings per %s: %.2f", newTimeUnit, (realEarnings/numericUnit));
+      System.out.printf("\n%.2f per hr", (grossEarnings / hoursWorked));
+        
+   }
+}
+
+
+
+
